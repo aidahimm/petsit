@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const PetOwner = sequelize.define("PetOwner", {
         PetOwnerId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             acceptNull: false,
             primaryKey: true
         },
@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: true,
         },
         RequestId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             required: false,
             foreignKey: true
         },
         PetId:{
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             required: false,
             foreignKey: true
         }

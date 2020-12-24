@@ -1,11 +1,12 @@
+// 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define("Auth", {
-        AuthId: {
-            type: DataTypes.UUID,
+    const Auth = sequelize.define("Auth", {
+        AuthId:{
+            type: DataTypes.INTEGER,
             acceptNull: false,
-            primaryKey: true
+            primaryKey: true,
         },
-        username: {
+        authUsername: {
             type: DataTypes.STRING,
             acceptNull: false
         },
@@ -13,5 +14,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             acceptNull: false
         }
-    });
+    },{
+        findAuthByUsername: function (username) {
+            return this.findAll({
+                where: {
+                    authUsername: username
+                }
+            });
+        }
+    }
+);
+    return Auth;
 };

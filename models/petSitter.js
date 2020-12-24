@@ -1,17 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
     const PetSitter = sequelize.define("PetSitter", {
         PetSitterId:{
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             acceptNull: false,
             primaryKey: true
         },
         RequestId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             required: false,
             foreignKey: true,
         },
         RatingId:{
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             acceptNull: false,
         },
         acceptedCategory1: {

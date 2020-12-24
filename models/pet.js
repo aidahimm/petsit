@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Pet = sequelize.define("Pet", {
         PetId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             acceptNull: false,
             primaryKey: true
         },

@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Rating = sequelize.define("Rating", {
         RatingId:{
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             acceptNull: false,
             primaryKey: true
         },
