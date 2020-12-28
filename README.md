@@ -1,6 +1,6 @@
 # PetSit!
 <h2> ExpressJs/Sequelize/PostgreSQL/REST </h4> 
-<h2> Idea </h2>
+<h2> Purpose </h2>
 <p> PetSit! is going to be a web application that will serve as a platform to bring together pet owners and people who are available to provide services related to those pets when the owners cannot take care of them (pet sitters). The platform is to be an intermediary between both parties and won’t be responsible for providing the said service, however it will help both of them get exposure and hopefully find exactly what they need. 
 
 The idea is to have clients sign up as either a pet sitter or a pet owner, and upon their choice, they will have different interfaces/tabs and options according to what they need from the platform. After creating accounts, the owners will be able to add information about their pets and view pet sitter profiles to find the one most appropriate, then send pet-sitting requests. The pet sitters on the other hand will be able to add on their profiles the categories of pets they can pet-sit and any important details that would influence the viewers, then either accept requests or decline them. 
