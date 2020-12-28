@@ -59,9 +59,9 @@ Admin</li>
 
 <h2> Design </h2>
 
-<h4> Entity Class Diagram </h4>
+<h4> Models Diagram </h4>
 
-<h4> Repositories and Services Class Diagram </h4>
+<h4> Services Diagram </h4>
 
 <h3>Sequence Diagrams</h3>
 
