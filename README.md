@@ -1,5 +1,5 @@
 # PetSit!
-<h2> ExpressJs/Sequelize/PostgreSQL/REST </h4> 
+<h2> ExpressJs/JavaScript/Sequelize/PostgreSQL/REST </h4> 
 <h2> Purpose </h2>
 <p> PetSit! is going to be a web application that will serve as a platform to bring together pet owners and people who are available to provide services related to those pets when the owners cannot take care of them (pet sitters). The platform is to be an intermediary between both parties and won’t be responsible for providing the said service, however it will help both of them get exposure and hopefully find exactly what they need. 
 
