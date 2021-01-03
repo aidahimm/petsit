@@ -50,10 +50,10 @@ Admin</li>
 <h2> Architecture </h2>
 
 <h4> Physical Architecture - Initial </h4>
-![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Initial.png)
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Initial.png?raw=true)
 
 <h4> Physical Architecture - Protocols & Software </h4>
-![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png)
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png?raw=true)
 
 <h4> Physical Architecture - Resilient (No SPoF) / Scalable </h4>
 ![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Scalable.png)
@@ -70,15 +70,16 @@ Admin</li>
 
 <h4> Services Diagram </h4>
 ![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Services.png)
+
 <p>The services of my application according to my functional requirements are: rating a pet sitter since it requires some calculations to be done before updating the entity, pet sitting request related actions, pet actions because of associations and certain verifications, and finally, user/account-related actions because of the different data checks needed.</p>
 
 <p><strong><em>User Service:</em></strong> uses 4 models; the user model, the pet sitter/owner models, and authority model.</p>
 
-Rating Service: uses 2 models; the rating model and the user model for certain attributes.
+<p><strong><em>Rating Service:</em></strong>  uses 2 models; the rating model and the user model for certain attributes.</p>
 
-Request Service: uses 2 models; the request model and the user model for certain attributes.
+<p><strong><em>Request Service:</em></strong>  uses 2 models; the request model and the user model for certain attributes.</p>
 
-Pet Service: uses 2 models: the pet model and user model for certain attributes.</p>
+<p><strong><em>Pet Service:</em></strong>  uses 2 models: the pet model and user model for certain attributes.</p>
 
 <h3>Sequence Diagrams</h3>
 
