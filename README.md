@@ -50,6 +50,7 @@ Admin</li>
 <h2> Architecture </h2>
 
 <h4> Physical Architecture - Initial </h4>
+diagrams/Initial.png
 
 <h4> Physical Architecture - Protocols & Software </h4>
 
