@@ -9,7 +9,7 @@ To maintain good quality services from the pet sitters, there will exist the opt
 </p>
 
 <h3> Technologies </h3>
-<p> The implementation of the application is in JavaScript, I used the Node.js backend framework “Express.js”. For the ORM framework, I chose Sequelize which will link the MySQL database to the backend. The protocol of the web service is REST. The front-end would potentially be done with the Nuxt.js framework.</p>
+<p> The implementation of the application is in JavaScript, I used the Node.js backend framework “Express.js”. For the ORM framework, I chose Sequelize which will link the PostgreSQL database to the backend. The protocol of the web service is REST. The front-end would potentially be done with the Nuxt.js framework.</p>
 
 <h3> Functional Requirements </h3>
 <h4>Actors</h4>
