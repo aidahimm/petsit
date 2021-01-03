@@ -11,13 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.PetOwner,{
-        foreignKey: 'petOwner_id'
-      })
     }
   };
   Authority.init({
     authUsername: DataTypes.STRING,
+    authPassword: DataTypes.STRING,
     isAuth: DataTypes.BOOLEAN
   }, {
     sequelize,

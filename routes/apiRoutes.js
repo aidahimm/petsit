@@ -4,6 +4,8 @@ const UserController = require('../controllers/userController');
 const RequestController = require ('../controllers/requestController')
 const RatingController = require ('../controllers/ratingController')
 const PetController = require ('../controllers/petController')
+const jwt = require('jsonwebtoken')
+
 //
 //
 //
@@ -12,64 +14,82 @@ const PetController = require ('../controllers/petController')
 //
 //USER
 //Create
-router.post('/crp', (req, res)=> {
-    UserController.createNewPetSitterUsers(req, res).then(() => res.send("success"))
+router.post('/signUpSitter', (req, res)=> {
+    UserController.signUpPetSitterUsers(req, res).then(() => res.send("success"))
 });
 
-router.post('/cro', (req, res)=> {
-    UserController.createNewPetOwnerUsers(req, res).then(() => res.send("success"))
+router.post('/signUpOwner', (req, res)=> {
+    UserController.signUpPetOwnerUsers(req, res).then(() => res.send("success"))
 });
 
-router.post('/cra', (req, res)=> {
-    UserController.createAuthorities(req, res).then(() => res.send("success"));
+// I called Token verification here only to facilitate testing
+// The feature does work however, and it can simply be called in any other route we need
+// The same way we do in the following
+router.post('/crAuth', VerifyToken, (req, res)=> {
+    jwt.verify(req.token, 'secretkey', (err)=>{
+        if(err) {
+            res.sendStatus(403)
+        }else{
+            UserController.createAuthorities(req, res).then(() => res.send("success"));
+        }
+    });
 });
 
-//Retrieve All
-router.get("/all", (req, res)=> {
+router.post ('/login', (req, res) => {
+    UserController.Login(req, res).then(() => res.send("success"));
+});
+
+//Retrieve
+router.get("/all", (req,  res)=> {
     UserController.getAllUsers(req, res).then(() => res.send("success"));
 });
 
-router.get("/fps", (req, res)=> {
+router.get("/findSitters", (req, res)=> {
     UserController.findAllPetSitterUsers(req, res).then(() => res.send("success"));
 });
-router.get("/fpo", (req, res)=> {
+router.get("/findOwners", (req, res)=> {
     UserController.findAllPetOwnerUsers(req, res).then(() => res.send("success"));
 });
 
 //Search User with Attribute
-router.post("/fbc", (req, res)=> {
+router.post("/findByCateg", (req, res)=> {
     UserController.findPetSitterByCateg(req, res).then(() => res.send("success"));
 });
 
-router.post("/fbn", (req, res)=> {
+router.post("/findByName", (req, res)=> {
     UserController.findPetSitterByName(req, res).then(() => res.send("success"));
 });
-router.post("/fbu", (req, res)=> {
+router.post("/findByUsername", (req, res)=> {
     UserController.findPetSitterByUsername(req, res).then(() => res.send("success"));
 });
 
-router.post("/fbcitycateg", (req, res)=> {
+router.post("/findByCityCateg", (req, res)=> {
     UserController.findByCityAndCateg(req, res).then(() => res.send("success"));
 });
 
-router.post("/fpc", (req, res)=> {
+router.post("/findByCity", (req, res)=> {
     UserController.findPetSitterByCity(req, res).then(() => res.send("success"));
 });
 
-//Update User Info
-router.put("/ufn", (req, res)=> {
-    UserController.UpdateUserFirst(req, res).then(() => res.send("success"));
+//Update Some User Info
+router.put("/uPassword", (req, res)=> {
+    UserController.UpdateUserPassword(req, res).then(() => res.send("success"));
 });
 
-router.put("/uct", (req, res)=> {
+router.put("/uEmail", (req, res)=> {
+    UserController.UpdateUserEmail(req, res).then(() => res.send("success"));
+});
+
+router.put("/uSitterCateg", (req, res)=> {
     UserController.updateAcceptedCategories(req, res).then(() => res.send("success"));
 });
 
-router.put("/flag", (req, res)=> {
+router.put("/flagUser", (req, res)=> {
     UserController.FlagUser(req, res).then(() => res.send("success"));
 });
 
-router.delete("/delu", (req, res) => {
+//Delete User
+router.delete("/delUser", (req, res) => {
     UserController.DeleteTheUser(req, res).then(() => res.send("success"));
 });
 
@@ -79,32 +99,32 @@ router.delete("/delu", (req, res) => {
 //
 //
 //
-// Requests
-router.post('/crreq', (req, res)=> {
+// REQUESTS
+router.post('/crReq', (req, res)=> {
     RequestController.createRequest(req, res).then(() => res.send("success"))
 });
 
-router.get("/allreq", (req, res)=> {
+router.get("/allReq", (req, res)=> {
     RequestController.findAllReqs(req, res).then(() => res.send("success"));
 });
 
-router.post('/streqs', (req, res)=> {
+router.post('/findSitterReqs', (req, res)=> {
     RequestController.findAllSitterReqs(req, res).then(() => res.send("success"))
 });
 
-router.post('/owreqs', (req, res)=> {
+router.post('/findOwnerReqs', (req, res)=> {
     RequestController.findAllOwnerReqs(req, res).then(() => res.send("success"))
 });
 
-router.post('/facceptedreqs', (req, res)=> {
+router.post('/findAcceptedReqs', (req, res)=> {
     RequestController.findAccepted(req, res).then(() => res.send("success"))
 });
 
-router.put('/accept', (req, res)=> {
+router.put('/acceptReq', (req, res)=> {
     RequestController.acceptReqs(req, res).then(() => res.send("success"))
 });
 
-router.put('/reject', (req, res)=> {
+router.put('/rejectReq', (req, res)=> {
     RequestController.rejectReqs(req, res).then(() => res.send("success"))
 });
 
@@ -114,8 +134,8 @@ router.put('/reject', (req, res)=> {
 //
 //
 //
-// Rating
-router.post('/rate', (req, res)=> {
+// RATING
+router.post('/rateSitter', (req, res)=> {
     RatingController.updateRating(req, res).then(() => res.send("success"))
 });
 
@@ -124,19 +144,35 @@ router.post('/rate', (req, res)=> {
 //
 //
 //
-// Pets
-router.post('/getpets', (req, res)=> {
+// PETS
+router.post('/getPets', (req, res)=> {
     PetController.getOwnerPets(req, res).then(() => res.send("success"))
 });
-router.post('/createpets', (req, res)=> {
+router.post('/createPets', (req, res)=> {
     PetController.createPet(req, res).then(() => res.send("success"))
 });
-router.put('/updatepet', (req, res)=> {
+router.put('/updatePetV', (req, res)=> {
     PetController.updatePet(req, res).then(() => res.send("success"))
 });
-router.delete('/deletepet', (req, res)=> {
+router.delete('/deletePet', (req, res)=> {
     PetController.deletePet(req, res).then(() => res.send("success"))
 });
-
+//
+//
+//
+//
+//
+//
+// Token Verification
+function VerifyToken (req, res, next) {
+    const bearerHeader = req.headers['authorization']
+    if( typeof bearerHeader !== 'undefined'){
+        const bearerToken = bearerHeader.split(' ')[1]
+        req.token = bearerToken
+        next()
+    }else{
+        res.sendStatus(403)
+    }
+}
 
 module.exports = router;

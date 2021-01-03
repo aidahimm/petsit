@@ -1,27 +1,48 @@
 const db = require ('../models')
 const Sequelize = require('sequelize')
 const {createRating} = require("../services/ratingService");
+const jwt = require ('jsonwebtoken')
 
 //Create
-function createAuthority (username) {
-    const count = 0;
-    let exists = 'The authority was created'
-    try {
-        exists = db.Authority.count({ where: { authUsername: username } })
-            .then(count => {
-                if (count === 0) {
-                    db.Authority.create({
-                        authUsername: username,
-                        isAuth: true
-                    })
-                } else {
-                    const exists = 'The username already exists in the authorities'
-                    return exists
-                }
-            })
-        return exists
-    }catch(e) {
-        throw Error('Error while creating new authority');
+async function authenticateAuth(newAuthUsername, newAuthPassword, res, authUsername, authPassword){
+    let auth = await db.Authority.findOne({
+        where: {
+            [Sequelize.Op.and]: [{authUsername: authUsername}, {authPassword: authPassword}]
+        }
+    })
+    if (auth !== null){
+        await createAuthority(newAuthUsername, newAuthPassword, res)
+    } else {
+        res.send('Authority authentication Failed...')
+    }
+}
+async function createAuthority (newAuthUsername, newAuthPassword, res) {
+    let auth = await db.Authority.findOne({
+        where:{
+            authUsername: newAuthUsername
+        }
+    })
+    if(auth === null){
+        db.Authority.create({
+            authUsername: newAuthUsername,
+            authPassword: newAuthPassword,
+            isAuth: true
+        })
+    } else {
+        res.send('This admin account exists!')
+    }
+}
+
+async function login(res, username, password){
+    let user = await db.User.findOne({
+        where: {
+            [Sequelize.Op.and]: [{username: username}, {password: password}]
+        }
+    })
+    if(user !== null) {
+        return token = jwt.sign({user}, 'secretkey');
+    } else {
+        res.send('Incorrect username or password')
     }
 }
 
@@ -40,9 +61,15 @@ async function createPetOwner(n, id){
     })
 }
 
-async function createNewUserPetSitter (username, password, email, firstname, lastname, phone, city, country, desc, categ) {
+async function signUpUserPetSitter (res, username, password, email, firstname, lastname, phone, city, country, desc, categ) {
     const role = 'petsitter'
-    user = await db.User.create({
+    let exists = await db.User.findOne({
+        where: {
+            username: username
+        }
+    })
+    if ( exists === null ) {
+        user = await db.User.create({
             username: username,
             password: password,
             email: email,
@@ -53,32 +80,44 @@ async function createNewUserPetSitter (username, password, email, firstname, las
             country: country,
             role: role,
         })
-    sitter = await createPetSitter(desc, user.id, categ);
-    await createRating(sitter.id, [], 0)
+        sitter = await createPetSitter(desc, user.id, categ);
+        await createRating(sitter.id, [], 0)
+    } else {
+        res.send('Username already exist... Please enter a new one')
+    }
 
 }
 
-async function createNewUserPetOwner (username, password, email, firstname, lastname, phone, city, country, nop) {
+async function signUpUserPetOwner (res, username, password, email, firstname, lastname, phone, city, country, nop) {
     const role = 'petowner'
-    user = await db.User.create({
-        username: username,
-        password: password,
-        email: email,
-        firstname: firstname,
-        lastname: lastname,
-        phone: phone,
-        city: city,
-        country: country,
-        role: role,
+    let exists = await db.User.findOne({
+        where: {
+            username: username
+        }
     })
-    await createPetOwner(nop, user.id);
+    if ( exists === null ) {
+        user = await db.User.create({
+            username: username,
+            password: password,
+            email: email,
+            firstname: firstname,
+            lastname: lastname,
+            phone: phone,
+            city: city,
+            country: country,
+            role: role,
+        })
+        await createPetOwner(nop, user.id);
+    } else {
+        res.send('Username already exist... Please enter a new one')
+    }
 }
 
 //Search
 async function getAllUsers (){
     return await db.User.findAll({
         include: [
-        {model: db.PetSitter}, {model: db.PetOwner}
+        { model: db.PetSitter }, { model: db.PetOwner }
     ]});
 }
 
@@ -151,7 +190,10 @@ async function findPetSitterByUsername(username) {
 async function findPetSitterByName(name) {
     return await db.User.findAll({
         where: {
-            [Sequelize.Op.or]: [{firstname: name}, {lastname: name}]
+            [Sequelize.Op.and]: {
+                [Sequelize.Op.or]: [{firstname: name}, {lastname: name}],
+                role: 'petsitter'
+            }
         },
         include: [
             {model: db.PetSitter}
@@ -160,25 +202,49 @@ async function findPetSitterByName(name) {
 }
 
 //Simple Update
-async function updateUserFirst(username, newFirst) {
-    console.log(username)
-    return await db.User.update({firstname: newFirst}, {
+async function flagUser (res, username) {
+    if ( await db.User.update({flag: true}, {
         where: {
             username: username
         }
-    })
+    }) === 0){
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
 
-async function flagUser (username) {
-    db.User.update({flag: true}, {
+async function updateUserEmail(res, newEmail, username) {
+    if (( await db.User.update({email: newEmail}, {
         where: {
             username: username
         }
-    })
+    })) === 0) {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
-async function updateAcceptedCategs(username, Categ) {
-    user = await db.User.findOne({ where: { username: username } })
-    return await db.PetSitter.update({categs: Sequelize.fn('array_append', Sequelize.col('categs'), Categ)}, {
+
+async function updateUserPassword(res, newPassword, username) {
+    let user = await db.User.findOne({
+        where: {
+            username: username,
+        }
+    })
+    if(user !== null){
+        if(newPassword === user.password){
+            res.send("Your new password can't be the same as your old password")
+        } else {
+            await user.update({password: newPassword})
+        }
+    } else {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
+}
+async function updateAcceptedCategs(res, username, Categ) {
+    let user = await db.User.findOne({
+        where: {
+            username: username,
+        }
+    })
+    if ( await db.PetSitter.update({categs: Sequelize.fn('array_append', Sequelize.col('categs'), Categ)}, {
         where: {
             user_id: user.id,
             [Sequelize.Op.not]: {
@@ -187,70 +253,126 @@ async function updateAcceptedCategs(username, Categ) {
                 }
             }
         }
-    })
+    }) === 0) {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
 
 //Simple Update with no Controllers
-function updateUserLast(newLast, username) {
-    db.User.update({lastname: newLast}, {
+//Unexposed
+async function updateUserFirst(username, newFirst) {
+    let user = await db.User.findOne({
         where: {
-            username: username
+            username: username,
         }
     })
+    if(user === null){
+       return await db.User.update({firstname: newFirst}, {
+            where: {
+                username: username
+            }
+        })
+    } else {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
+
 }
-function updateUserPhone(newPhone, username) {
-    db.User.update({phone: newPhone}, {
+async function updateUserLast(res, newLast, username) {
+    let user = await db.User.findOne({
         where: {
-            username: username
+            username: username,
         }
     })
+    if(user === null){
+        db.User.update({lastname: newLast}, {
+            where: {
+                username: username
+            }
+        })
+    } else {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
-function updateUserEmail(newEmail, username) {
-    db.User.update({email: newEmail}, {
+async function updateUserPhone(res, newPhone, username) {
+    let user = await db.User.findOne({
         where: {
-            username: username
+            username: username,
         }
     })
+    if(user === null){
+        db.User.update({phone: newPhone}, {
+            where: {
+                username: username
+            }
+        })
+    } else {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
-function updateUserPassword(newPassword, username) {
-    db.User.update({password: newPassword}, {
+
+async function updateUserDOB(res, newDB, username) {
+    let user = await db.User.findOne({
         where: {
-            username: username
+            username: username,
         }
     })
+    if(user === null){
+        db.User.update({dob: newDB}, {
+            where: {
+                username: username
+            }
+        })
+    } else {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
-function updateUserDOB(newDB, username) {
-    db.User.update({dob: newDB}, {
+async function updateUserCity(res, newCity, username) {
+    let user = await db.User.findOne({
         where: {
-            username: username
+            username: username,
         }
     })
+    if(user === null){
+        db.User.update({city: newCity}, {
+            where: {
+                username: username
+            }
+        })
+    } else {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
-function updateUserCity(newCity, username) {
-    db.User.update({city: newCity}, {
+async function updateUserCountry(res, newCountry, username) {
+    let user = await db.User.findOne({
         where: {
-            username: username
+            username: username,
         }
     })
-}
-function updateUserCountry(newCountry, username) {
-    db.User.update({country: newCountry}, {
-        where: {
-            username: username
-        }
-    })
+    if(user === null){
+        db.User.update({country: newCountry}, {
+            where: {
+                username: username
+            }
+        })
+    } else {
+        res.send('Account does not exist! Please enter a correct username...')
+    }
 }
 
 //Delete
-async function DeleteUser (username) {
-    db.User.destroy({
-        where: {
-            username: username
-        }
-    })
+async function DeleteUser (res, username) {
+    try {
+        await db.User.destroy({
+            where: {
+                username: username
+            }
+        })
+    } catch {
+        res.send('Could Not Delete!')
+    }
 }
 
 
 module.exports = {
-    getAllUsers, createAuthority, createNewUserPetOwner, createNewUserPetSitter, findAllPetSitters, findAllPetOwners, updateUserFirst, findPetSitterByCity, findPetSitterByCateg, findPetSitterByUsername, findPetSitterByName, DeleteUser, flagUser, updateAcceptedCategs, findPetSitterByCategAndCity,
+    getAllUsers, authenticateAuth, signUpUserPetOwner, signUpUserPetSitter, findAllPetSitters, findAllPetOwners, updateUserPassword, updateUserEmail, findPetSitterByCity, findPetSitterByCateg, findPetSitterByUsername, findPetSitterByName, DeleteUser, flagUser, updateAcceptedCategs, findPetSitterByCategAndCity, login
 }

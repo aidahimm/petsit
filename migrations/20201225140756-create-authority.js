@@ -11,6 +11,9 @@ module.exports = {
       authUsername: {
         type: Sequelize.STRING
       },
+      authPassword: {
+        type: Sequelize.STRING
+      },
       isAuth: {
         type: Sequelize.BOOLEAN
       },
