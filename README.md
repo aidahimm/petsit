@@ -50,25 +50,43 @@ Admin</li>
 <h2> Architecture </h2>
 
 <h4> Physical Architecture - Initial </h4>
-diagrams/Initial.png
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Initial.png)
 
 <h4> Physical Architecture - Protocols & Software </h4>
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png)
 
 <h4> Physical Architecture - Resilient (No SPoF) / Scalable </h4>
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Scalable.png)
 
 <h4> Logical Architecture - Inside an Application Server </h4>
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Inside-App-Server.png)
 
 <h2> Design </h2>
 
 <h4> Models Diagram </h4>
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Models.png)
+
+<p>In my diagram there are a few entities that represent the classes of my web application that were mentioned. First we have the user entity; each user is connected in a 1:1 relationship with “pet owner” or “pet sitter” models, which are two types of clients of my application. There is a pet entity where everything related to the pets owned by pet owners is; since each owner can have many pets, there is a 1:M relationship between them. A pet owner can make many requests, a pet sitter can receive many requests: request is an entity of its own that is related to both of them in a 1:M relationship since each request is specific to one pet owner/pet user. Each pet sitter can have one rating as an evaluation of their service. The authority model holds attributes for admin accounts.</p>
 
 <h4> Services Diagram </h4>
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Services.png)
+<p>The services of my application according to my functional requirements are: rating a pet sitter since it requires some calculations to be done before updating the entity, pet sitting request related actions, pet actions because of associations and certain verifications, and finally, user/account-related actions because of the different data checks needed.</p>
+
+<p><strong><em>User Service:</em></strong> uses 4 models; the user model, the pet sitter/owner models, and authority model.</p>
+
+Rating Service: uses 2 models; the rating model and the user model for certain attributes.
+
+Request Service: uses 2 models; the request model and the user model for certain attributes.
+
+Pet Service: uses 2 models: the pet model and user model for certain attributes.</p>
 
 <h3>Sequence Diagrams</h3>
 
 <h4> Data-driven Sequence Diagram </h4>
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Data-driven.png)
 
 <h4> Service-driven Sequence Diagram </h4>
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Sequence.png)
 
 <h2> Development </h2>
 <ul>
