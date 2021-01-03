@@ -104,8 +104,7 @@ There will be three actors on this web application:
 <li>run "npm install" to install the dependecies</li>
 </ul>
 
-
-//instructions for Sequelize + Database
+Instructions for Sequelize + Database
 
 <ul>
 <li>Create a PostgreSQL database called "petsit" with a password "password"</li>
