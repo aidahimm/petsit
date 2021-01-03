@@ -15,8 +15,8 @@ To maintain good quality services from the pet sitters, there will exist the opt
 <h4>Actors</h4>
 There will be three actors on this web application:
 <ul>
-<li>Two types of clients: Pet owners, and Pet sitters(people who offer to take care of the pets).
-Admin</li>
+<li>Two types of clients: Pet owners, and Pet sitters(people who offer to take care of the pets).</li>
+<li>Admin</li>
 </ul>
 <h4> Pet owner Functionalities</h4>
 <ul>
