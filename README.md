@@ -9,7 +9,7 @@ To maintain good quality services from the pet sitters, there will exist the opt
 </p>
 
 <h3> Technologies </h3>
-<p> The implementation of the application is written in JavaScript, I used the Node.js backend framework “Express.js”. For the ORM framework, I chose Sequelize which will link the MySQL database to the backend. The protocol of the web service is REST. The front-end would potentially be done with the Nuxt.js framework.</p>
+<p> The implementation of the application is in JavaScript, I used the Node.js backend framework “Express.js”. For the ORM framework, I chose Sequelize which will link the MySQL database to the backend. The protocol of the web service is REST. The front-end would potentially be done with the Nuxt.js framework.</p>
 
 <h3> Functional Requirements </h3>
 <h4>Actors</h4>
@@ -64,6 +64,7 @@ Admin</li>
 <h2> Design </h2>
 
 <h4> Models Diagram </h4>
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Models.png)
 
 <p>In my diagram there are a few entities that represent the classes of my web application that were mentioned. First we have the user entity; each user is connected in a 1:1 relationship with “pet owner” or “pet sitter” models, which are two types of clients of my application. There is a pet entity where everything related to the pets owned by pet owners is; since each owner can have many pets, there is a 1:M relationship between them. A pet owner can make many requests, a pet sitter can receive many requests: request is an entity of its own that is related to both of them in a 1:M relationship since each request is specific to one pet owner/pet user. Each pet sitter can have one rating as an evaluation of their service. The authority model holds attributes for admin accounts.</p>
