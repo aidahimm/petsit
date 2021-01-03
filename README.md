@@ -50,10 +50,10 @@ Admin</li>
 <h2> Architecture </h2>
 
 <h4> Physical Architecture - Initial </h4>
-![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Initial.png?raw=true)
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Initial.png)
 
 <h4> Physical Architecture - Protocols & Software </h4>
-![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png?raw=true)
+![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png)
 
 <h4> Physical Architecture - Resilient (No SPoF) / Scalable </h4>
 ![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Scalable.png)
@@ -79,15 +79,19 @@ Admin</li>
 
 <p><strong><em>Request Service:</em></strong>  uses 2 models; the request model and the user model for certain attributes.</p>
 
-<p><strong><em>Pet Service:</em></strong>  uses 2 models: the pet model and user model for certain attributes.</p>
+<p><strong><em>Pet Service:</em></strong>  uses 2 models; the pet model and user model for certain attributes.</p>
 
 <h3>Sequence Diagrams</h3>
 
 <h4> Data-driven Sequence Diagram </h4>
 ![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Data-driven.png)
 
+<p>When the user sends a request through the REST Capable client with parameters in a JSON file, those parameters are then parsed by the ExpressJs body parser for the use of the models in creation for example, or else. Responses to client requests can sometimes have bodies as well, the parser encloses that data and sends it to the client which then serves it to the user.</p>
+
 <h4> Service-driven Sequence Diagram </h4>
 ![alt text](https://github.com/aidahimm/petsit/blob/master/diagrams/Sequence.png)
+
+<p>The user uses a REST capable client to send a request to a REST routing API. The router forwards the HTTP request to the appropriate controller based on the request path (e.g “http://localhost:####/api/<strong>getUsers</strong>”). The controller will then call the service specified and send any parameters needed. The services call methods on certain models that are mapped to the DBMS as tables. When the queries are executed, there is a “waterfall” of returns until reaching again the REST capable Client which renders the UI with the result for the user. </p>
 
 <h2> Development </h2>
 <ul>
