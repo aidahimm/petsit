@@ -55,7 +55,7 @@ There will be three actors on this web application:
 
 <h4> Physical Architecture - Protocols & Software </h4>
 <img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png" style="text-align:center;">
-<p>The protocol this web application will be using is REST because it is more compliant to HTTP specifications, over HTTPS for client/server <em>authentication and confidentiality</em>. I will also be implementing the server-side with the Express.js backend framework as stated earlier in the first part of the report, I will then use MySQL for the Database which will be linked to the backend via Sequelize. </p>
+<p>The protocol this web application will be using is REST because it is more compliant to HTTP specifications, over HTTPS for client/server <em>authentication and confidentiality</em>. I will also be implementing the server-side with the Express.js backend framework as stated earlier in the first part of the report, I will then use PostgreSQL for the Database which will be linked to the backend via Sequelize. </p>
 
 <h4> Physical Architecture - Resilient (No SPoF) / Scalable </h4>
 <img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Scalable.png" style="text-align:center;">
