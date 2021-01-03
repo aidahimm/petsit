@@ -33,7 +33,7 @@ There will be three actors on this web application:
 <li> A pet sitter shall be able to create an account (Pet-sitter role)</li>
 <li> A pet sitter shall be able to accept/decline a pet-sitting request. </li>
 <li> A pet sitter shall be able to add a category of pets they are willing to take care of. </li>
-<li> A pet sitter shall be able to search for accepted pet-sitting requests.</li>
+<li> A pet sitter shall be able to search for received pet-sitting requests.</li>
 <h4> Admin Functionalities </h4>
 <li> An admin shall be able to create other admin accounts. </li>
 <h3> Non-functional Requirements </h3>
