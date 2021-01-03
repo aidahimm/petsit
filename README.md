@@ -107,3 +107,8 @@ There will be three actors on this web application:
 
 //instructions for Sequelize + Database
 
+<ul>
+<li>Create a PostgreSQL database called "petsit" with a password "password"</li>
+<li>To migrate the models, run : npx sequelize-cli db:migrate</li>
+<li>To run the seeds [Data to start with], run : npx sequelize-cli db:seed:all</li>
+</ul>  
