@@ -110,5 +110,6 @@ There will be three actors on this web application:
 <ul>
 <li>Create a PostgreSQL database called "petsit" with a password "password"</li>
 <li>To migrate the models, run command: $ npx sequelize-cli db:migrate</li>
-<li>To use the seeds [Data to start with], run command: $ npx sequelize-cli db:seed:all</li>
+<li>To use the seeds [Data to start with], run command: $ npx sequelize-cli db:seed:all<br>
+  (sequelize seed will be needed because it provides a default admin account)</li>
 </ul>  
