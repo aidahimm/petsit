@@ -39,7 +39,7 @@ There will be three actors on this web application:
 <h3> Non-functional Requirements </h3>
 <h4> Performance</h4>
 <li> The system shall demonstrate a decent level of performance i.e. The system shall allow the client to pass Google Lighthouse performance test with at least 80% </li>
-<h4>Scalability.</h4>
+<h4>Scalability</h4>
 <li> The system shall maintain, at a reasonable cost, a good performance level in peak times and with an increase in load.</li>
 <h4>Security</h4>
 <li> Data traffic shall be confidential and its integrity shall be protected.</li>
