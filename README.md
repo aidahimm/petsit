@@ -50,26 +50,29 @@ Admin</li>
 <h2> Architecture </h2>
 
 <h4> Physical Architecture - Initial </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Initial.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Initial.png" style="text-align:center;">
+<p>In this diagram, the client request goes through a firewall that will monitor incoming and outgoing network traffic for <em>security</em>, it will then reach the application server where it will be treated. That request will require data from the database server: data that is crucial for the users and admins of the platform [Client (pet sitter & owner) information, records of pending/accepted/rejected pet-sitting requests, etc].</p>
 
 <h4> Physical Architecture - Protocols & Software </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Protocols%26Software.png" style="text-align:center;">
+<p>The protocol this web application will be using is REST because it is more compliant to HTTP specifications, over HTTPS for client/server <em>authentication and confidentiality</em>. I will also be implementing the server-side with the Express.js backend framework as stated earlier in the first part of the report, I will then use MySQL for the Database which will be linked to the backend via Sequelize. </p>
 
 <h4> Physical Architecture - Resilient (No SPoF) / Scalable </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Scalable.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Scalable.png" style="text-align:center;">
+<p>According to the non-functional requirements, my application ought to be <em>scalable</em> and robust where <em>no single point of failure will be accepted</em> and for that, I will need to make sure not to rely on only one instance of my server/resources in case they crash or whatnot. I need to have at least two servers serving my application, so I will be using Nginx as a reverse proxy and add a load-balancing feature to be able to access them all. For the data I will need to have a cluster of Database servers instead of only one instance as well.</p>
 
 <h4> Logical Architecture - Inside an Application Server </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Inside-App-Server.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Inside-App-Server.png" style="text-align:center;">
 
 <h2> Design </h2>
 
 <h4> Models Diagram </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Models.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Models.png" style="text-align:center;">
 
 <p>In my diagram there are a few entities that represent the classes of my web application that were mentioned. First we have the user entity; each user is connected in a 1:1 relationship with “pet owner” or “pet sitter” models, which are two types of clients of my application. There is a pet entity where everything related to the pets owned by pet owners is; since each owner can have many pets, there is a 1:M relationship between them. A pet owner can make many requests, a pet sitter can receive many requests: request is an entity of its own that is related to both of them in a 1:M relationship since each request is specific to one pet owner/pet user. Each pet sitter can have one rating as an evaluation of their service. The authority model holds attributes for admin accounts.</p>
 
 <h4> Services Diagram </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Services.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Services.png" style="text-align:center;">
 
 <p>The services of my application according to my functional requirements are: rating a pet sitter since it requires some calculations to be done before updating the entity, pet sitting request related actions, pet actions because of associations and certain verifications, and finally, user/account-related actions because of the different data checks needed.</p>
 
@@ -84,12 +87,12 @@ Admin</li>
 <h3>Sequence Diagrams</h3>
 
 <h4> Data-driven Sequence Diagram </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Data-driven.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Data-driven.png" style="text-align:center;">
 
 <p>When the user sends a request through the REST Capable client with parameters in a JSON file, those parameters are then parsed by the ExpressJs body parser for the use of the models in creation for example, or else. Responses to client requests can sometimes have bodies as well, the parser encloses that data and sends it to the client which then serves it to the user.</p>
 
 <h4> Service-driven Sequence Diagram </h4>
-<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Sequence.png">
+<img src="https://github.com/aidahimm/petsit/blob/master/diagrams/Sequence.png" style="text-align:center;">
 
 <p>The user uses a REST capable client to send a request to a REST routing API. The router forwards the HTTP request to the appropriate controller based on the request path (e.g “http://localhost:####/api/<strong>getUsers</strong>”). The controller will then call the service specified and send any parameters needed. The services call methods on certain models that are mapped to the DBMS as tables. When the queries are executed, there is a “waterfall” of returns until reaching again the REST capable Client which renders the UI with the result for the user. </p>
 
