@@ -1,9 +1,9 @@
 {
-  "name": "petsit",
+  "name": "umdb",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node index.jsnp",
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
@@ -13,13 +13,13 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.8",
     "morgan": "~1.9.1",
+    "neo4j": "^2.0.0-RC2",
+    "neo4j-driver": "^4.4.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
-    "pug": "^3.0.0",
-    "sequelize": "^6.3.5",
-    "sequelize-cli": "^6.2.0",
-    "sequelize-extension": "^1.0.2"
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
